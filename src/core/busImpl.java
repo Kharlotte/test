@@ -498,12 +498,12 @@ public class CloudBusImpl2 implements CloudBus, CloudBusIN, ManagementNodeChange
         public Message deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             JsonObject jObj = jsonElement.getAsJsonObject();
             Map.Entry<String, JsonElement> entry = jObj.entrySet().iterator().next();
-            String className = entry.getKey();
+            String key = entry.getKey();
             Class<?> clazz;
             try {
-                clazz = Class.forName(className);
+                clazz = Class.forName(key);
             } catch (ClassNotFoundException e) {
-                throw new JsonParseException(String.format("Unable to deserialize class[%s]", className), e);
+                throw new JsonParseException(String.format("Unable to deserialize class[%s]", key), e);
             }
             return (Message) gson.fromJson(entry.getValue(), clazz);
         }
